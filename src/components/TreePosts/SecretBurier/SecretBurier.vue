@@ -8,7 +8,6 @@
                 icon="icon-corner-left-down" 
                 :disabled="!isValidToBury"
                 hollow 
-                style="marginTop: 10px" 
                 @click="burySecret(content)"
             >
                 {{ buryButtonText }}
