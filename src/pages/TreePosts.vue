@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <icon></icon>
-        <secret-burier></secret-burier>
+        <icon :lang="language"></icon>
+        <secret-burier :lang="language"></secret-burier>
         <posts></posts>
     </div>
 </template>
@@ -16,6 +16,12 @@ export default {
         Icon,
         SecretBurier,
         Posts
+    },
+
+    computed: {
+        language() {
+            return navigator.language;
+        }
     }
 }
 </script>
