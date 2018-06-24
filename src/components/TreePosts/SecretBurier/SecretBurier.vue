@@ -1,10 +1,10 @@
 <template>
-    <at-card noHover=true>
+    <at-card :noHover="true">
         <div slot="title">
             Hide your secrets into the tree hollow ...
         </div>
         <div slot="extra">
-            <at-button icon="icon-corner-left-down" hollow style="marginTop: 10px">
+            <at-button icon="icon-corner-left-down" hollow style="marginTop: 10px" @click="burySecret(content)">
                 Bury
             </at-button>
         </div>
@@ -20,10 +20,28 @@
 </template>
 
 <script>
+import { create } from '../../../server/posts.js'
+
 export default {
     data() {
         return {
             content: null
+        }
+    },
+
+    methods: {
+        /**
+         * Create a secret post
+         * 
+         * @param {String} content the post content
+         */
+        burySecret(content) {
+            create(content).then(response => {
+                this.content = null
+                // TODO: When create success
+            }, error => {
+                // TODO: When create fails
+            });
         }
     }
 }
