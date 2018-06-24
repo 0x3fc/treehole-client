@@ -4,7 +4,13 @@
             {{ titleString }}
         </div>
         <div slot="extra">
-            <at-button icon="icon-corner-left-down" hollow style="marginTop: 10px" @click="burySecret(content)">
+            <at-button 
+                icon="icon-corner-left-down" 
+                :disabled="!isValidToBury"
+                hollow 
+                style="marginTop: 10px" 
+                @click="burySecret(content)"
+            >
                 {{ buryButtonText }}
             </at-button>
         </div>
@@ -34,6 +40,19 @@ export default {
     },
 
     computed: {
+        /**
+         * A basic validation for bury button
+         * 
+         * @return {Boolean} is valid to bury
+         */
+        isValidToBury() {
+            if (this.content && this.content.length > 0) {
+                return true;
+            }
+
+            return false;
+        },
+
         /**
          * Placeholder tree hollow story in different languages
          * 
