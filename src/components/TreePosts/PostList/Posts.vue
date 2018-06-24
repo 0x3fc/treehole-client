@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div>
         <post :post="post" v-for="post in posts" :key="post.id" :isLoading="isLoading"></post>
     </div>
 </template>
