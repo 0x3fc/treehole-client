@@ -1,16 +1,19 @@
 <template>
     <div class="container">
+        <icon></icon>
         <secret-burier></secret-burier>
         <posts></posts>
     </div>
 </template>
 
 <script>
+import Icon from '../components/Icon/Icon'
 import SecretBurier from '../components/TreePosts/SecretBurier/SecretBurier'
-import Posts from '../components/TreePosts/PostList/Posts';
+import Posts from '../components/TreePosts/PostList/Posts'
 
 export default {
     components: {
+        Icon,
         SecretBurier,
         Posts
     }
