@@ -6,10 +6,11 @@ const postUri = 'api/v1/posts'
 /**
  * Fetch all tree hollow secret posts
  * 
+ * @param {Number} pageNumber the page number if is paginated
  * @return {Object} response of all posts
  */
-export const index = () => {
-    return Vue.http.get(postUri)
+export const index = (pageNumber = null) => {
+    return Vue.http.get(postUri, {params: {page: pageNumber}})
 }
 
 /**
