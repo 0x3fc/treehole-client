@@ -1,6 +1,6 @@
 <template>
     <at-card :noHover="true">
-        <div slot="title">
+        <div slot="title" style="fontSize: 18px">
             {{ titleString }}
         </div>
         <div slot="extra">
