@@ -1,10 +1,16 @@
 <template>
-    
+    <div class="container">
+        <posts></posts>
+    </div>
 </template>
 
 <script>
-export default {
+import Posts from '../components/TreePosts/PostList/Posts';
 
+export default {
+    components: {
+        Posts
+    }
 }
 </script>
 
