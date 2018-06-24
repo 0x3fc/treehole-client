@@ -109,11 +109,21 @@ export default {
          */
         burySecret(content) {
             create(content).then(response => {
-                this.content = null
-                // TODO: When create success
+                location.reload(); /* reload the page */
             }, error => {
-                // TODO: When create fails
+                this.errorMessageHandling();
             });
+        },
+
+        /* services methods */
+
+        /**
+         * Raise an error message indicating error occurring
+         * 
+         * @param {String} message the error message that is going to be raised
+         */
+        errorMessageHandling(message = "Some error occurred when sending data to the server :(") {
+            this.$Message.error(message);
         }
     }
 }
