@@ -4,8 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import './server/index'
+import AtComponents from 'at-ui'
+import 'at-ui-style'
 
 Vue.config.productionTip = false
+
+Vue.use(AtComponents)
 
 /* eslint-disable no-new */
 new Vue({
