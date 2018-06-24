@@ -1,36 +1,28 @@
 <template>
     <div class="container-fluid">
-        <post :post="post" v-for="post in posts" :key="post.id"></post>
+        <post :post="post" v-for="post in posts" :key="post.id" :isLoading="isLoading"></post>
     </div>
 </template>
 
 <script>
 import Post from './Post'
+import { index } from '../../../server/posts.js'
 
 export default {
     data() {
         return {
-            posts: [
-                {
-                    id: 1,
-                    content: "Dummy post 1.",
-                    created_at: {
-                        date: "2018-06-23 19:29:45.000000",
-                        timezone_type: 3,
-                        timezone: "UTC"
-                    }
-                },
-                {
-                    id: 2,
-                    content: "Dummy post 2.",
-                    created_at: {
-                        date: "2018-06-23 19:30:45.000000",
-                        timezone_type: 3,
-                        timezone: "UTC"
-                    }
-                },
-            ]
+            posts: null,
+            isLoading: true
         }
+    },
+
+    mounted() {
+        index().then(response => {
+            this.posts = response.data.data
+            this.isLoading = false
+        }, error => {
+            // TODO: Index request error handling
+        });
     },
 
     components: {
