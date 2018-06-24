@@ -36,7 +36,7 @@ export default {
         index().then(response => {
             this.updateLocalPosts(response.data.data, response.data.meta)
         }, error => {
-            // TODO: Index request error handling
+            this.errorMessageHandling()
         });
     },
 
@@ -52,7 +52,7 @@ export default {
             index(pageNumber).then(response => {
                 this.updateLocalPosts(response.data.data, response.data.meta)
             }, error => {
-                // TODO: PaginatedIndex error handling
+                this.errorMessageHandling()
             });
         },
 
@@ -68,6 +68,15 @@ export default {
             this.posts = posts;
             this.meta = meta;
             this.isLoading = false;
+        },
+
+        /**
+         * Raise an error message indicating error occurring
+         * 
+         * @param {String} message the error message that is going to be raised
+         */
+        errorMessageHandling(message = "Some error occurred when loading the page :(") {
+            this.$Message.error(message);
         }
     }
 }
