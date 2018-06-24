@@ -1,5 +1,10 @@
 <p align="center"><img src="https://github.com/senhungwong/treehole-client/blob/master/src/assets/icon/treehole-en.png" width="60%"></p>
 
+<p align="center">
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+<a href="https://github.com/senhungwong/treehole-client/tags"><img src="https://img.shields.io/github/tag/senhungwong/treehole-client.svg" alt="GitHub tag"></a>
+</p>
+
 ## Description
 
 A client side secret burier. User can post anonymously their secrets to release the stress. Others can view these secrets from all over the world without knowing the person.
