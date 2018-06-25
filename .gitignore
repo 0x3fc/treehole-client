@@ -1,4 +1,5 @@
-*
-!index.html
-!static/*
-!CNAME
+.DS_Store
+dist/
+node_modules/
+.vscode
+.idea
