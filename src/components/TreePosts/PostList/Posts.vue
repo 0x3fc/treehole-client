@@ -1,6 +1,9 @@
 <template>
     <div>
-        <post :post="post" v-for="post in posts" :key="post.id" :isLoading="isLoading"></post>
+        <!-- show loading card if is loading the data -->
+        <at-card :noHover="true" style="margin: 10px 0" :loading="true" v-if="isLoading"></at-card>
+        <!-- otherwize show the content -->
+        <post :post="post" v-for="post in posts" :key="post.id" v-else></post>
 
         <at-card :bordered="false" :noHover="true">
             <div class="flex flex-around">
