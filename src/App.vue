@@ -19,4 +19,10 @@ export default {
   margin-top: 60px;
   font-size: 16px;
 }
+
+.created-date {
+    text-align: right;
+    font-size: 14px;
+    color: #5e8581;
+}
 </style>
