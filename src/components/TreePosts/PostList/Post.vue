@@ -10,7 +10,7 @@
 </template>
 
 <script>
-const dayjs = require('dayjs')
+const moment = require('moment')
 
 export default {
     props: {
@@ -19,7 +19,7 @@ export default {
 
     computed: {
         created_at() {
-            return dayjs(this.post.created_at.date + this.post.created_at.timezone)
+            return moment(this.post.created_at.date)
                 .format("YYYY-MM-DD HH:mm:ss")
         }
     }
