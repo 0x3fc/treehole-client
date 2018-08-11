@@ -19,8 +19,7 @@ export default {
 
     computed: {
         created_at() {
-            return moment(this.post.created_at.date)
-                .format("YYYY-MM-DD HH:mm:ss")
+            return moment(this.post.created_at.date + 'Z').local().format("YYYY-MM-DD HH:mm:ss");
         }
     }
 }
