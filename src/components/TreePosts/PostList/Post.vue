@@ -1,7 +1,7 @@
 <template>
     <at-card :noHover="true" style="margin: 10px 0">
         <div>
-            {{ post.content }} 
+            <span style="white-space: pre-wrap;">{{ post.content }}</span>
             <div class="created-date">
                 -- {{ created_at }}
             </div>
