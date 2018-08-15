@@ -4,6 +4,7 @@
             {{ titleString }}
         </div>
         <div slot="extra">
+            <at-button @click="isPickingEmoji=true" icon="icon-plus-circle"></at-button>
             <at-button 
                 icon="icon-corner-left-down" 
                 :disabled="!isValidToBury"
@@ -14,28 +15,60 @@
             </at-button>
         </div>
         <at-textarea
+            id="secret-field"
             v-model="content" 
             :placeholder="storyPlaceholder" 
             autosize 
             resize="none"
             minRows=3
+            :autofocus="true"
         >
         </at-textarea>
+        <at-modal v-model="isPickingEmoji" :showFooter="false" width="385" :showClose="false" @on-cancel="onCloseEmojiPickerModal()">
+            <picker 
+                :native="true"
+                @select="addEmoji" 
+                title="Insert an emoji" 
+                emoji="laughing"
+                :infiniteScroll="false"
+                :include="includedEmoji"
+                :showCategories="false"
+                :showPreview="false"
+                />
+        </at-modal>
     </at-card>
 </template>
 
 <script>
 import { create } from '../../../server/posts.js'
+import { Picker } from 'emoji-mart-vue';
 
 export default {
     data() {
         return {
-            content: null
+            content: '',
+            lastCaretIndex: 0,
+            isPickingEmoji: false,
+            includedEmoji: [
+                'people',
+            ]
         }
     },
 
     props: {
         lang: String
+    },
+
+    components: {
+        Picker,
+    },
+
+    watch: {
+        content: function () {
+            document.getElementById('secret-field').addEventListener('keyup', e => {
+                this.lastCaretIndex = e.target.selectionStart;
+            });
+        }
     },
 
     computed: {
@@ -112,6 +145,29 @@ export default {
             }, error => {
                 this.errorMessageHandling();
             });
+        },
+
+        /**
+         * Insert the emoji to content
+         * 
+         * @param {Object} emoji the emoji from emoji mart vue
+         */
+        addEmoji(emoji) {
+            this.content = [
+                this.content.slice(0, this.lastCaretIndex),
+                emoji.native,
+                this.content.slice(this.lastCaretIndex),
+            ].join('');
+            this.lastCaretIndex += emoji.native.length;
+        },
+
+        /**
+         * Focus on text area when close emoji picker
+         */
+        onCloseEmojiPickerModal() {
+            const textAreaElement = document.getElementsByTagName('textarea')[0];
+            textAreaElement.focus();
+            textAreaElement.setSelectionRange(this.lastCaretIndex, this.lastCaretIndex);
         },
 
         /* services methods */
