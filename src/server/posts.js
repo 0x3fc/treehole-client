@@ -17,8 +17,13 @@ export const index = (pageNumber = null) => {
  * Create a tree hollow secret post
  * 
  * @param {String} content the post content
+ * @param {Number} imageId the post image id
+ * 
  * @returns {Object} the new post Laravel API resource
  */
-export const create = (content) => {
-    return Vue.http.post(postUri, {content: content})
+export const create = (content, imageId = null) => {
+    return Vue.http.post(postUri, {
+        content: content,
+        imageId: imageId,
+    });
 }
