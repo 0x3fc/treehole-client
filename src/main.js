@@ -6,10 +6,14 @@ import router from './router'
 import './server/index'
 import AtComponents from 'at-ui'
 import 'at-ui-style'
+import { Upload } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 
 Vue.use(AtComponents)
+
+Vue.component(Upload.name, Upload);
 
 /* eslint-disable no-new */
 new Vue({

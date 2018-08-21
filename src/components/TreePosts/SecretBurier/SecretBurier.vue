@@ -4,7 +4,8 @@
             {{ titleString }}
         </div>
         <div slot="extra">
-            <at-button @click="isPickingEmoji=true" icon="icon-plus-circle"></at-button>
+            <at-button @click="isPickingEmoji=true" icon="icon-sun"></at-button>
+            <at-button @click="isAddingImage=true" icon="icon-image" :disabled="!!imageId"></at-button>
             <at-button 
                 icon="icon-corner-left-down" 
                 :disabled="!isValidToBury"
@@ -24,6 +25,9 @@
             :autofocus="true"
         >
         </at-textarea>
+        <div v-if="!!imageId">
+            <img :src="uploadedImagePreviewUrl"/>
+        </div>
         <at-modal v-model="isPickingEmoji" :showFooter="false" width="385" :showClose="false" @on-cancel="onCloseEmojiPickerModal()">
             <picker 
                 :native="true"
@@ -36,11 +40,25 @@
                 :showPreview="false"
                 />
         </at-modal>
+        <at-modal v-model="isAddingImage" :showFooter="false" width="390" :showClose="false" @on-cancel="onCloseEmojiPickerModal()">
+            <el-upload
+                drag
+                action=""
+                :http-request="upload"
+                :multiple="false"
+                :before-upload="validateImage"
+                >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+        </at-modal>
     </at-card>
 </template>
 
 <script>
 import { create } from '../../../server/posts.js'
+import ImageHttp from '../../../server/images.js'
 import { Picker } from 'emoji-mart-vue';
 
 export default {
@@ -51,7 +69,9 @@ export default {
             isPickingEmoji: false,
             includedEmoji: [
                 'people',
-            ]
+            ],
+            isAddingImage: false,
+            imageId: null,
         }
     },
 
@@ -130,7 +150,11 @@ export default {
 
             /* default english */
             return "Bury";
-        }
+        },
+
+        uploadedImagePreviewUrl() {
+            return ImageHttp.show(this.imageId);
+        },
     },
 
     methods: {
@@ -140,7 +164,7 @@ export default {
          * @param {String} content the post content
          */
         burySecret(content) {
-            create(content).then(response => {
+            create(content, this.imageId).then(response => {
                 location.reload(); /* reload the page */
             }, error => {
                 this.errorMessageHandling();
@@ -168,6 +192,33 @@ export default {
             const textAreaElement = document.getElementsByTagName('textarea')[0];
             textAreaElement.focus();
             textAreaElement.setSelectionRange(this.lastCaretIndex, this.lastCaretIndex);
+        },
+
+        validateImage(file) {
+            const isValidType = file.type === 'image/jpeg' || file.type === 'image/png';
+            const isValidSize = file.size < 524288000;
+
+            if (!isValidType) {
+                this.$Message.error('上传图片只能是png或jpg格式');
+            }
+
+            if (!isValidSize) {
+                this.$Message.error('上传图片大小不能超过500MB');
+            }
+
+            return isValidType && isValidSize;
+        },
+
+        /**
+         * Upload an image
+         */
+        upload(item) {
+            ImageHttp.store(item.file).then(res => {
+                this.imageId = res.body.id;
+                this.isAddingImage = false;
+            }, err => {
+                this.$Message.error('Some error occured when uploading the image');
+            });
         },
 
         /* services methods */
