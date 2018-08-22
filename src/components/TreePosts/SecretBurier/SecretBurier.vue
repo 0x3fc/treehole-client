@@ -25,9 +25,7 @@
             :autofocus="true"
         >
         </at-textarea>
-        <div v-if="!!imageId">
-            <img :src="uploadedImagePreviewUrl"/>
-        </div>
+        <image-presenter v-if="!!imageId" :source="uploadedImagePreviewUrl"></image-presenter>
         <at-modal v-model="isPickingEmoji" :showFooter="false" width="385" :showClose="false" @on-cancel="onCloseEmojiPickerModal()">
             <picker 
                 :native="true"
@@ -60,6 +58,7 @@
 import { create } from '../../../server/posts.js'
 import ImageHttp from '../../../server/images.js'
 import { Picker } from 'emoji-mart-vue';
+import ImagePresenter from '../Share/ImagePresenter';
 
 export default {
     data() {
@@ -81,6 +80,7 @@ export default {
 
     components: {
         Picker,
+        ImagePresenter,
     },
 
     watch: {

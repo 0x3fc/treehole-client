@@ -2,9 +2,7 @@
     <at-card :noHover="true" style="margin: 10px 0">
         <div>
             <span style="white-space: pre-wrap;">{{ post.content }}</span>
-            <div v-if="post.image">
-                <img :src="post.image">
-            </div>
+            <image-presenter v-if="post.image" :source="post.image"></image-presenter>
             <div class="created-date">
                 -- {{ created_at }}
             </div>
@@ -14,10 +12,15 @@
 
 <script>
 import moment from 'moment';
+import ImagePresenter from '../Share/ImagePresenter';
 
 export default {
     props: {
         post: Object
+    },
+
+    components: {
+        ImagePresenter,
     },
 
     computed: {
